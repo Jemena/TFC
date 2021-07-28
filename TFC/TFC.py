@@ -1,10 +1,15 @@
+from typing import Dict
+from libreria.database import DATAFILE, actualizar_datos, almacenar_datos, borrar_datos, leer_datos
+from pygame import Color
 from libreria import *
+import json
 
 
-WIN = pygame.display.set_mode((WIDTH, HEIGHT))   # Window --> editar en settings
+
+WINDOW = pygame.display.set_mode((WIDTH, HEIGHT))   # Window --> editar en settings
 pygame.display.set_caption("Paint Chapuza")
 
-def init_grid(rows, cols, color):
+def init_grid(rows, cols, color=None):
     grid = []
 
     for i in range(rows):
@@ -31,7 +36,7 @@ def draw_grid(win, grid):
                              (i * PIXEL_SIZE, HEIGHT - TOOLBAR_HEIGHT))
 
 
-def draw(win, grid, buttons):   #Color y update canvas
+def draw(win, grid, buttons):   # Color y update canvas
     win.fill(BG_COLOR)
     draw_grid(win, grid)
 
@@ -43,7 +48,7 @@ def draw(win, grid, buttons):   #Color y update canvas
 
 def get_pos(pos):
     x, y = pos
-    row = y // PIXEL_SIZE
+    row = y // PIXEL_SIZE                # Cuidado el orden de filas y columnas
     col = x // PIXEL_SIZE
 
     if row >= ROWS:
@@ -52,11 +57,12 @@ def get_pos(pos):
     return row, col
 
 
+
 run = True
 clock = pygame.time.Clock()
 grid = init_grid(ROWS, COLS, BG_COLOR)       # Pixels
 drawing_color = BLACK
-
+print(grid)
 button_y = HEIGHT - TOOLBAR_HEIGHT/2 - 25
 buttons = [
     Button(10, button_y, 50, 50, BLACK),
@@ -64,8 +70,12 @@ buttons = [
     Button(130, button_y, 50, 50, GREEN),
     Button(190, button_y, 50, 50, BLUE),
     Button(250, button_y, 50, 50, WHITE, "Erase", BLACK),
-    Button(310, button_y, 50, 50, WHITE, "Clear", BLACK)
+    Button(310, button_y, 50, 50, WHITE, "Clear", BLACK),
+    Button(370, button_y, 50, 50, GREY, "Save", BLACK),
+    Button(430, button_y, 50, 50, GREY, "Load", BLACK)
 ]
+
+datos = list()
 
 while run:
     clock.tick(FPS)
@@ -80,16 +90,39 @@ while run:
             try:
                 row, col = get_pos(pos)
                 grid[row][col] = drawing_color
+                #print(row, col)
+                
+                
             except IndexError:
                 for button in buttons:
                     if not button.clicked(pos):
                         continue
-
                     drawing_color = button.color
+                    
                     if button.text == "Clear":
-                        grid = init_grid(ROWS, COLS, BG_COLOR)
+                        grid = init_grid(ROWS, COLS, BG_COLOR)        #desde settings
                         drawing_color = BLACK
-
-    draw(WIN, grid, buttons)
+                        print("Todo limpio")
+                    
+                    if button.text == "Save":
+                        datos.clear()
+                        datos.extend(grid)
+                        #almacenar_datos(datos,DATAFILE)
+                        drawing_color = BLACK
+                        with open('paint.txt', 'w') as saved_data:
+                            json.dump(datos, saved_data)
+                        print(datos)
+                    
+                    if button.text == "Load":
+                        #leer_datos(DATAFILE)
+                        with open('paint.txt') as saved_data:
+                           datos = json.load(saved_data)
+                        #grid=init_grid(ROWS, COLS, color=None)
+                        drawing_color = BLACK
+                        print(datos)
+                        
+                        
+    draw(WINDOW, grid, buttons)
 
 pygame.quit()
+print("Cerrando la chapuza")
