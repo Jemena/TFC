@@ -9,18 +9,18 @@ pygame.font.init()
 
 WIDTH, HEIGHT = 600, 700       # SCREEN
 
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-GREY = (128, 128, 128)
-BLUE = (0, 0, 255)
-GREEN = (0, 255, 0)
-RED = (255, 0, 0)
-TEXTCOLOR = (0, 0, 0)
+BLACK = [0, 0, 0]
+WHITE = [255, 255, 255]
+GREY = [128, 128, 128]
+BLUE = [0, 0, 255]
+GREEN = [0, 255, 0]
+RED = [255, 0, 0]
+TEXTCOLOR = [0, 0, 0]
 GRAY = GREY
 
 FPS = 120                # Limitar velocidad del programa y dibujo
 
-ROWS = COLS = 5
+ROWS = COLS = 100
 
 TOOLBAR_HEIGHT = HEIGHT - WIDTH
 

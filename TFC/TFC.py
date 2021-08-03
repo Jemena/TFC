@@ -24,7 +24,7 @@ def draw_grid(win, grid):
         for j, pixel in enumerate(row):                              # i, j posiciones de los pixel
             pygame.draw.rect(win, pixel, (j * PIXEL_SIZE, i *
                                           PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE))
-
+    
     if DRAW_GRID_LINES:
         for i in range(ROWS + 1):        # +1 es para q hayan lineas en los finales
             pygame.draw.line(win, BLACK, (0, i * PIXEL_SIZE),
@@ -56,12 +56,14 @@ def get_pos(pos):
     return row, col
 
 
-
 run = True
 clock = pygame.time.Clock()
+
 grid = init_grid(ROWS, COLS, BG_COLOR)       # Pixels
 drawing_color = BLACK
+
 #print(grid)
+
 button_y = HEIGHT - TOOLBAR_HEIGHT/2 - 25
 buttons = [
     Button(10, button_y, 50, 50, BLACK),
@@ -74,7 +76,7 @@ buttons = [
     Button(430, button_y, 50, 50, GREY, "Load", BLACK)
 ]
 
-datos = {'pos': [], 'color': []}
+datos = list()
 
 while run:
     clock.tick(FPS)
@@ -89,37 +91,41 @@ while run:
             try:
                 row, col = get_pos(pos)
                 grid[row][col] = drawing_color
-                #print(get_pos(pos), drawing_color )
-                
-                
+                #pixels = {'pos': [], 'color': [] }
+                #pixels['pos'].append(get_pos(pos))
+                #pixels['color'].append(drawing_color)
+                #datos.append(pixels)
+                #print(grid)
                 
             except IndexError:
+                
                 for button in buttons:
                     if not button.clicked(pos):
                         continue
                     drawing_color = button.color
                     
                     if button.text == "Clear":
+                        datos.clear()
                         grid = init_grid(ROWS, COLS, BG_COLOR)        #desde settings
                         drawing_color = BLACK
                         print("Todo limpio")
                     
                     if button.text == "Save":
-                        #datos.clear()
-                        datos['pos'].append()
-                        datos['color'].append(drawing_color)
+                        datos.clear()
+                        datos.extend(grid)
                         drawing_color = BLACK
-                        with open('paint.txt', 'w') as saved_data:
+                        with open('paint.json', 'w') as saved_data:
                             json.dump(datos, saved_data)
-                        print(datos)
+                        #print(datos)
                     
                     if button.text == "Load":
-                        with open('paint.txt', 'r') as saved_data:
-                           datos = json.load(saved_data)
-                        #for dato in datos:
-                            #grid=init_grid(rows=dato,cols=dato,color=dato) 
                         drawing_color = BLACK
-                        print(datos)
+                        with open('paint.json', 'r') as saved_data:
+                           datos = json.load(saved_data)
+                        for dato in datos:
+                            grid = []
+                            grid= datos
+                        #print(datos)
                         
                         
     draw(WINDOW, grid, buttons)
