@@ -18,9 +18,9 @@ RED = [255, 0, 0]
 TEXTCOLOR = [0, 0, 0]
 GRAY = GREY
 
-FPS = 120                # Limitar velocidad del programa y dibujo
+FPS = 240                # Limitar velocidad del programa y dibujo
 
-ROWS = COLS = 100
+ROWS = COLS = 50         #Resolucion
 
 TOOLBAR_HEIGHT = HEIGHT - WIDTH
 

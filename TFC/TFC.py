@@ -91,10 +91,6 @@ while run:
             try:
                 row, col = get_pos(pos)
                 grid[row][col] = drawing_color
-                #pixels = {'pos': [], 'color': [] }
-                #pixels['pos'].append(get_pos(pos))
-                #pixels['color'].append(drawing_color)
-                #datos.append(pixels)
                 #print(grid)
                 
             except IndexError:
@@ -105,7 +101,7 @@ while run:
                     drawing_color = button.color
                     
                     if button.text == "Clear":
-                        datos.clear()
+                        #datos.clear()
                         grid = init_grid(ROWS, COLS, BG_COLOR)        #desde settings
                         drawing_color = BLACK
                         print("Todo limpio")
@@ -116,7 +112,7 @@ while run:
                         drawing_color = BLACK
                         with open('paint.json', 'w') as saved_data:
                             json.dump(datos, saved_data)
-                        #print(datos)
+                        print('Saving')
                     
                     if button.text == "Load":
                         drawing_color = BLACK
@@ -125,7 +121,7 @@ while run:
                         for dato in datos:
                             grid = []
                             grid= datos
-                        #print(datos)
+                        print('Loading')
                         
                         
     draw(WINDOW, grid, buttons)
