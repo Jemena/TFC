@@ -1,6 +1,6 @@
+from libreria import *
 from typing import Dict
 from pygame import Color
-from libreria import *
 import json
 
 
@@ -91,7 +91,7 @@ while run:
             try:
                 row, col = get_pos(pos)
                 grid[row][col] = drawing_color
-                #print(grid)
+                #print(row, col)
                 
             except IndexError:
                 
@@ -110,9 +110,7 @@ while run:
                         datos.clear()
                         datos.extend(grid)
                         drawing_color = BLACK
-                        with open('paint.json', 'w') as saved_data:
-                            json.dump(datos, saved_data)
-                        print('Saving')
+                        saving(datos, DATAFILE)
                     
                     if button.text == "Load":
                         drawing_color = BLACK
@@ -120,7 +118,7 @@ while run:
                            datos = json.load(saved_data)
                         for dato in datos:
                             grid = []
-                            grid= datos
+                            grid = datos
                         print('Loading')
                         
                         
