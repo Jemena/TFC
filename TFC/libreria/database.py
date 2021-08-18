@@ -6,7 +6,7 @@ import json
 con = sqlite3.connect('paint.db')
 cursor = con.cursor()
 
-cursor.executescript('''DROP TABLE IF EXISTS pixels; CREATE TABLE pixels (Id integer, fila text)''')
+cursor.executescript('''DROP TABLE IF EXISTS pixels; CREATE TABLE pixels (Id integer, RGB text)''')
 con.commit()
 
 with open(DATAFILE, 'r') as json_file:
@@ -31,7 +31,7 @@ with open(DATAFILE, 'r') as json_file:
         #valor = {'id':index, 'color': color}
         #print(valor)
         #print(index, color)
-        #cursor.execute("INSERT INTO pixels values(?)", [color])
+        #cursor.execute("INSERT INTO pixels values(?,?)", index, color)
 
 
 
