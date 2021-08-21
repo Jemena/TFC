@@ -1,4 +1,4 @@
-from .settings import *
+from settings import *
 import sqlite3
 import json
 
@@ -15,30 +15,26 @@ with open(DATAFILE, 'r') as json_file:
 #print(json_data[0][1])
 
 #No quitar los comentarios o no funcionara el paint, ya que la database no funciona
-#for index, colores in enumerate(json_data):
+for index, colores in enumerate(json_data):
 #for index, colores in zip(range(len(json_data)), json_data):
     #valor = {'id':index,'color': colores}
     #print(valor)
     #colores = str(colores)
-    #index=str(index) 
+    index=str(index) 
     #colores=json_data
     #colores=str(colores)
     #print(type(colores))
     #print(colores)
     #cursor.executemany('INSERT INTO pixels values(?,?)', index, colores)
     #con.commit()
-    #for color in colores:
+    for color in colores:
         #valor = {'id':index, 'color': color}
         #print(valor)
-        #print(index, color)
-        #cursor.execute("INSERT INTO pixels values(?,?)", index, color)
+        print(index, color)
+        cursor.execute("INSERT INTO pixels values(?,?)", index, color)
+        con.commint()
 
 
-
-def saving(datos, destino = DATAFILE):
-    with open(destino, 'w') as saved_data:
-        json.dump(datos, saved_data)
-    print('Saving')
 
 
 
