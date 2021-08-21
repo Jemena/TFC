@@ -8,7 +8,7 @@ api_url = 'https://api.github.com/users/Jemena'
 
 response = requests.post('https://httpbin.org/post', json=json_data)
 #response = requests.get('https://httpbin.org/post', json=json_data)
-print("Status code: ", response.status_code)
+print(response)
 print(response.json())
 
 
