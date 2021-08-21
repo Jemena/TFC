@@ -78,6 +78,11 @@ buttons = [
 
 datos = list()
 
+def saving(datos, destino = DATAFILE):
+    with open(destino, 'w') as saved_data:
+        json.dump(datos, saved_data)
+    print('Saving')
+
 while run:
     clock.tick(FPS)
 
